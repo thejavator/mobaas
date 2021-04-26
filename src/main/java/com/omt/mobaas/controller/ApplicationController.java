@@ -13,18 +13,23 @@ import java.util.List;
 
 @RestController
 @RequestMapping(path = "/api")
-public class AppController {
+public class ApplicationController {
 
     private final AppService definitionService;
 
     @Autowired
-    public AppController(AppService definitionService) {
+    public ApplicationController(AppService definitionService) {
         this.definitionService = definitionService;
     }
 
     @GetMapping(value = "/v1/applications/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public Application getApp(@PathVariable(value = "id") Long id) {
-        return definitionService.getApp(id);
+        try {
+            return definitionService.getApp(id);
+        } catch (Exception e) {
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND, "Application not found", e);
+        }
     }
 
     @GetMapping(value = "/v1/applications", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -33,17 +38,17 @@ public class AppController {
     }
 
     @PostMapping("/v1/applications")
-    public void createApp(@RequestBody Application application) {
-        definitionService.createApp(application);
+    public Application createApp(@RequestBody Application application) {
+        return definitionService.createApp(application);
     }
 
     @PostMapping("/v1/applications/{id}/screen")
     public Screen addScreen(@PathVariable(value = "id") Long id, @RequestBody Screen screen) {
-       try {
-           return definitionService.addScreen(id, screen);
-       }catch (Exception exc){
-           throw new ResponseStatusException(
-                   HttpStatus.NOT_FOUND, "Application not found", exc);
-       }
+        try {
+            return definitionService.addScreen(id, screen);
+        } catch (Exception e) {
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND, "Application not found", e);
+        }
     }
 }

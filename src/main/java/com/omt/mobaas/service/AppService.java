@@ -22,20 +22,31 @@ public class AppService {
         this.screenRepository = screenRepository;
     }
 
-    public Application getApp(Long appId) {
-        return applicationRepository.findById(appId).get();
+    /**
+     * Get application from given id.
+     * @param applicationId
+     * @return
+     * @throws IllegalArgumentException
+     */
+    public Application getApp(Long applicationId) throws IllegalArgumentException{
+        final Optional<Application> application = applicationRepository.findById(applicationId);
+        if (!application.isPresent()) {
+            throw new IllegalArgumentException("Application does not existe.");
+        }
+        return application.get();
     }
     public List<Application> getApps() {
         return applicationRepository.findAll();
     }
 
     /**
-     * Create new application
+     * Create new application.
      *
      * @param application
      */
-    public void createApp(Application application) {
+    public Application createApp(Application application) {
         applicationRepository.save(application);
+        return application;
     }
 
     /**
@@ -44,8 +55,7 @@ public class AppService {
      * @throws IllegalArgumentException
      */
     public Screen addScreen(Long applicationId, Screen screen) throws IllegalArgumentException {
-
-        Optional<Application> application = applicationRepository.findById(applicationId);
+        final Optional<Application> application = applicationRepository.findById(applicationId);
         if (!application.isPresent()) {
             throw new IllegalArgumentException("Application does not existe.");
         }
