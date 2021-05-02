@@ -3,6 +3,7 @@ package com.omt.mobaas.model;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.omt.mobaas.model.audit.DateAudit;
 import com.sun.istack.NotNull;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -10,6 +11,7 @@ import java.util.List;
 
 @Entity
 @Table
+@Schema(hidden = true)
 public class Application extends DateAudit {
 
     @OneToMany(

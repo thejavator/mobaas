@@ -2,6 +2,7 @@ package com.omt.mobaas.controller;
 
 import com.omt.mobaas.model.Section;
 import com.omt.mobaas.service.AppService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -10,6 +11,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(path = "/api")
+@Tag(name = "Section")
 public class SectionController {
 
     private final AppService appService;

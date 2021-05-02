@@ -2,6 +2,7 @@ package com.omt.mobaas.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.omt.mobaas.model.audit.DateAudit;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -10,6 +11,7 @@ import java.util.Objects;
 
 @Entity
 @Table
+@Schema(hidden = true)
 public class Section extends DateAudit {
 
     @Id

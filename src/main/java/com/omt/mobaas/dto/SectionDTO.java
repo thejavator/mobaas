@@ -1,6 +1,11 @@
 package com.omt.mobaas.dto;
 
-public class SectionDTO  {
+import io.swagger.v3.oas.annotations.Hidden;
+import io.swagger.v3.oas.annotations.media.Schema;
+
+@Schema(hidden = true)
+@Hidden
+public class SectionDTO {
 
 
     private Long id;

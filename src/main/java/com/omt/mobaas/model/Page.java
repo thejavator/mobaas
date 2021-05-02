@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.omt.mobaas.dto.SectionDTO;
 import com.omt.mobaas.model.audit.DateAudit;
+import io.swagger.v3.oas.annotations.Hidden;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -14,6 +16,8 @@ import java.util.stream.Collectors;
 
 @Entity
 @Table
+@Schema(hidden = true)
+@Hidden
 public class Page extends DateAudit {
 
     @Id
