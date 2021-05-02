@@ -1,13 +1,11 @@
-# Docker Compose file Reference (https://docs.docker.com/compose/compose-file/)
+version: '2'
 
-version: '3.7'
-
-# Define services
 services:
-  # App backend service
-  app-server:
+  app:
+    image: 'mobaas:latest'
+    build:
+      context: .
     container_name: app
-    build: .
     ports:
       - "8080:8080" # Forward the exposed port 8080 on the container to port 8080 on the host machine
     restart: always
@@ -19,8 +17,7 @@ services:
       SPRING_DATASOURCE_PASSWORD: mysecretpassword
     networks: # Networks to join (Services on the same network can communicate with each other using their name)
       - backend
-
-  # Database Service (Psql)
+    # Database Service (Psql)
   db:
     image: 'postgres:13-alpine'
     container_name: db
