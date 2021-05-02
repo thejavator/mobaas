@@ -6,7 +6,6 @@ import com.sun.istack.NotNull;
 
 import javax.persistence.*;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -14,13 +13,7 @@ import java.util.List;
 public class Application extends DateAudit {
 
     @Id
-    @SequenceGenerator(name = "application_sequence",
-            sequenceName = "application_sequence",
-            allocationSize = 1)
-    @GeneratedValue(
-            strategy = GenerationType.SEQUENCE,
-            generator = "application_sequence"
-    )
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
     @NotNull
@@ -40,20 +33,20 @@ public class Application extends DateAudit {
             orphanRemoval = true
     )
     @JsonManagedReference
-    private List<Screen> screens = new ArrayList<>();
+    private List<Page> pages = new ArrayList<>();
 
-    public List<Screen> getScreens() {
-        return screens;
+    public List<Page> getPages() {
+        return pages;
     }
 
-    public void addScreen(Screen screen){
-        if (!this.screens.contains(screen)) {
-            screens.add(screen);
+    public void addPage(Page page){
+        if (!this.pages.contains(page)) {
+            pages.add(page);
         }
     }
-    public void removeScreen(Screen screen){
-        if (this.screens.contains(screen)) {
-            screens.add(screen);
+    public void removePage(Page page){
+        if (this.pages.contains(page)) {
+            pages.add(page);
         }
     }
 

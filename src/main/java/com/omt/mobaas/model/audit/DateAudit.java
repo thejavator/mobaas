@@ -1,5 +1,6 @@
 package com.omt.mobaas.model.audit;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -25,6 +26,7 @@ public abstract class DateAudit implements Serializable {
     @LastModifiedDate
     private Date updatedAt;
 
+    @JsonIgnore
     public Date getCreatedAt() {
         return createdAt;
     }
@@ -33,6 +35,7 @@ public abstract class DateAudit implements Serializable {
         this.createdAt = createdAt;
     }
 
+    @JsonIgnore
     public Date getUpdatedAt() {
         return updatedAt;
     }

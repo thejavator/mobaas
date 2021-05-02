@@ -1,7 +1,7 @@
 package com.omt.mobaas.controller;
 
 import com.omt.mobaas.model.Application;
-import com.omt.mobaas.model.Screen;
+import com.omt.mobaas.model.Page;
 import com.omt.mobaas.service.AppService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -42,10 +42,10 @@ public class ApplicationController {
         return definitionService.createApp(application);
     }
 
-    @PostMapping("/v1/applications/{id}/screen")
-    public Screen addScreen(@PathVariable(value = "id") Long id, @RequestBody Screen screen) {
+    @PostMapping("/v1/applications/{id}/pages")
+    public Page addPage(@PathVariable(value = "id") Long id, @RequestBody Page page) {
         try {
-            return definitionService.addScreen(id, screen);
+            return definitionService.addPage(id, page);
         } catch (Exception e) {
             throw new ResponseStatusException(
                     HttpStatus.NOT_FOUND, "Application not found", e);

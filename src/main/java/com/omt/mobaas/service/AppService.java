@@ -1,9 +1,11 @@
 package com.omt.mobaas.service;
 
 import com.omt.mobaas.model.Application;
-import com.omt.mobaas.model.Screen;
+import com.omt.mobaas.model.Page;
+import com.omt.mobaas.model.Section;
 import com.omt.mobaas.repository.ApplicationRepository;
-import com.omt.mobaas.repository.ScreenRepository;
+import com.omt.mobaas.repository.PageRepository;
+import com.omt.mobaas.repository.SectionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,27 +16,33 @@ import java.util.Optional;
 public class AppService {
 
     private final ApplicationRepository applicationRepository;
-    private final ScreenRepository screenRepository;
+    private final PageRepository pageRepository;
+    private final SectionRepository sectionRepository;
 
     @Autowired
-    public AppService(ApplicationRepository applicationRepository, ScreenRepository screenRepository) {
+    public AppService(ApplicationRepository applicationRepository,
+                      PageRepository pageRepository,
+                      SectionRepository sectionRepository) {
         this.applicationRepository = applicationRepository;
-        this.screenRepository = screenRepository;
+        this.pageRepository = pageRepository;
+        this.sectionRepository = sectionRepository;
     }
 
     /**
      * Get application from given id.
+     *
      * @param applicationId
      * @return
      * @throws IllegalArgumentException
      */
-    public Application getApp(Long applicationId) throws IllegalArgumentException{
+    public Application getApp(Long applicationId) throws IllegalArgumentException {
         final Optional<Application> application = applicationRepository.findById(applicationId);
         if (!application.isPresent()) {
             throw new IllegalArgumentException("Application does not existe.");
         }
         return application.get();
     }
+
     public List<Application> getApps() {
         return applicationRepository.findAll();
     }
@@ -51,22 +59,34 @@ public class AppService {
 
     /**
      * @param applicationId
-     * @param screen
+     * @param page
      * @throws IllegalArgumentException
      */
-    public Screen addScreen(Long applicationId, Screen screen) throws IllegalArgumentException {
+    public Page addPage(Long applicationId, Page page) throws IllegalArgumentException {
         final Optional<Application> application = applicationRepository.findById(applicationId);
         if (!application.isPresent()) {
             throw new IllegalArgumentException("Application does not existe.");
         }
-        screen.setApplication(application.get());
-        screenRepository.save(screen);
-        return screen;
+        page.setApplication(application.get());
+        pageRepository.save(page);
+        return page;
     }
 
-    public List<Screen> getScreens() {
-        return screenRepository.findAll();
+    public List<Page> getPages() {
+        return pageRepository.findAll();
     }
 
+    public List<Section> getSections() {
+        return sectionRepository.findAll();
+    }
 
+    /**
+     *
+     * @param section
+     * @return
+     */
+    public Section createSection(Section section) {
+        sectionRepository.save(section);
+        return section;
+    }
 }
