@@ -30,13 +30,14 @@ public class PageController {
         return definitionService.getPages();
     }
 
-    @PostMapping("/v1/pages/{id}/screens")
-    public Page addPage(@PathVariable(value = "id") Long id, @RequestBody Page page) {
+
+    @PostMapping("/v1/pages/{pageId}/sections")
+    public Page addSectionToPage(@PathVariable(value = "pageId") Long pageId,@RequestBody SectionDTO sectionDTO) {
         try {
-            return definitionService.addPage(id, page);
+            return definitionService.addSectionToPage(pageId,sectionDTO.getId(), sectionDTO.getPosition());
         } catch (Exception e) {
             throw new ResponseStatusException(
-                    HttpStatus.NOT_FOUND, "Application not found", e);
+                    HttpStatus.NOT_FOUND, "Page not found", e);
         }
     }
 

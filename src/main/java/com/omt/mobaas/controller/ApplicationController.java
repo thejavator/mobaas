@@ -28,7 +28,7 @@ public class ApplicationController {
             return definitionService.getApp(id);
         } catch (Exception e) {
             throw new ResponseStatusException(
-                    HttpStatus.NOT_FOUND, "Application not found", e);
+                    HttpStatus.NOT_FOUND, "Unknown input param", e);
         }
     }
 
@@ -48,7 +48,8 @@ public class ApplicationController {
             return definitionService.addPage(id, page);
         } catch (Exception e) {
             throw new ResponseStatusException(
-                    HttpStatus.NOT_FOUND, "Application not found", e);
+                    HttpStatus.NOT_FOUND, "Unknown input param", e);
         }
     }
+
 }

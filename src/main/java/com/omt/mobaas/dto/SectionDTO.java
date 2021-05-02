@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.omt.mobaas.model.audit.DateAudit;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.*;
 
 

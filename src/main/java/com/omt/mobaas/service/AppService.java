@@ -2,8 +2,10 @@ package com.omt.mobaas.service;
 
 import com.omt.mobaas.model.Application;
 import com.omt.mobaas.model.Page;
+import com.omt.mobaas.model.PageLayout;
 import com.omt.mobaas.model.Section;
 import com.omt.mobaas.repository.ApplicationRepository;
+import com.omt.mobaas.repository.PageLayoutRepository;
 import com.omt.mobaas.repository.PageRepository;
 import com.omt.mobaas.repository.SectionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,14 +20,17 @@ public class AppService {
     private final ApplicationRepository applicationRepository;
     private final PageRepository pageRepository;
     private final SectionRepository sectionRepository;
+    private final PageLayoutRepository pageLayoutRepository;
 
     @Autowired
     public AppService(ApplicationRepository applicationRepository,
                       PageRepository pageRepository,
-                      SectionRepository sectionRepository) {
+                      SectionRepository sectionRepository,
+                      PageLayoutRepository pageLayoutRepository) {
         this.applicationRepository = applicationRepository;
         this.pageRepository = pageRepository;
         this.sectionRepository = sectionRepository;
+        this.pageLayoutRepository = pageLayoutRepository;
     }
 
     /**
@@ -38,7 +43,7 @@ public class AppService {
     public Application getApp(Long applicationId) throws IllegalArgumentException {
         final Optional<Application> application = applicationRepository.findById(applicationId);
         if (!application.isPresent()) {
-            throw new IllegalArgumentException("Application does not existe.");
+            throw new IllegalArgumentException("Unknown input param.");
         }
         return application.get();
     }
@@ -65,7 +70,7 @@ public class AppService {
     public Page addPage(Long applicationId, Page page) throws IllegalArgumentException {
         final Optional<Application> application = applicationRepository.findById(applicationId);
         if (!application.isPresent()) {
-            throw new IllegalArgumentException("Application does not existe.");
+            throw new IllegalArgumentException("Unknown input param.");
         }
         page.setApplication(application.get());
         pageRepository.save(page);
@@ -81,12 +86,22 @@ public class AppService {
     }
 
     /**
-     *
      * @param section
      * @return
      */
     public Section createSection(Section section) {
         sectionRepository.save(section);
         return section;
+    }
+
+    public Page addSectionToPage(Long pageId, Long sectionId, Integer position) {
+        final Optional<Page> page = pageRepository.findById(pageId);
+        final Optional<Section> section = sectionRepository.findById(sectionId);
+        if (!page.isPresent() || !section.isPresent()) {
+            throw new IllegalArgumentException("Unknown input param.");
+        }
+        PageLayout pageLayout = new PageLayout(page.get(), section.get(), position);
+        pageLayoutRepository.save(pageLayout);
+        return pageRepository.findById(pageId).get();
     }
 }
