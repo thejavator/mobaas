@@ -8,7 +8,6 @@ import com.omt.mobaas.repository.ApplicationRepository;
 import com.omt.mobaas.repository.PageLayoutRepository;
 import com.omt.mobaas.repository.PageRepository;
 import com.omt.mobaas.repository.SectionRepository;
-import org.modelmapper.ModelMapper;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -20,10 +19,6 @@ import java.util.List;
 @EnableJpaAuditing
 public class DefinitionConfig {
 
-    @Bean
-    public ModelMapper modelMapper() {
-        return new ModelMapper();
-    }
     @Bean
     CommandLineRunner commandLineRunner(ApplicationRepository applicationRepository,
                                         PageRepository pageRepository,

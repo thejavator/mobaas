@@ -5,11 +5,11 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.omt.mobaas.dto.SectionDTO;
 import com.omt.mobaas.model.audit.DateAudit;
-import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Entity
@@ -17,7 +17,8 @@ import java.util.stream.Collectors;
 public class Page extends DateAudit {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "page_seq_generator")
+    @SequenceGenerator(name = "page_seq_generator", sequenceName = "page_seq_generator", allocationSize = 1)
     private Long id;
     private String name;
     @JsonProperty

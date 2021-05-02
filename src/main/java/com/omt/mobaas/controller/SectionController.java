@@ -1,9 +1,7 @@
 package com.omt.mobaas.controller;
 
-import com.omt.mobaas.dto.SectionDTO;
 import com.omt.mobaas.model.Section;
 import com.omt.mobaas.service.AppService;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;

@@ -1,18 +1,20 @@
 package com.omt.mobaas.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.omt.mobaas.model.audit.DateAudit;
 
 import javax.persistence.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Objects;
 
 @Entity
 @Table
 public class Section extends DateAudit {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "section_seq_generator")
+    @SequenceGenerator(name = "section_seq_generator", sequenceName = "section_seq_generator", allocationSize = 1)
     private Long id;
     private String name;
     private String title;
@@ -24,8 +26,6 @@ public class Section extends DateAudit {
         this.name = name;
         this.title = title;
     }
-
-
     @OneToMany(mappedBy = "section",
             cascade = CascadeType.ALL,
             orphanRemoval = true
@@ -35,14 +35,6 @@ public class Section extends DateAudit {
 
     public Collection<PageLayout> getPageLayouts() {
         return pageLayouts;
-    }
-
-    @JsonProperty("position")
-    public Integer getPosition(Page page) {
-        return pageLayouts.stream()
-                .findFirst()
-                .filter(pl -> pl.getPage().getId() == page.getId()).get()
-                .getPosition();
     }
 
     public void setPageLayouts(Collection<PageLayout> pageLayouts) {

@@ -12,9 +12,14 @@ import java.util.List;
 @Table
 public class Application extends DateAudit {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private Long id;
+    @OneToMany(
+            mappedBy = "application",
+            cascade = CascadeType.ALL,
+            fetch = FetchType.EAGER,
+            orphanRemoval = true
+    )
+    @JsonManagedReference
+    private final List<Page> pages = new ArrayList<>();
 
     @NotNull
     private String name;
@@ -26,20 +31,17 @@ public class Application extends DateAudit {
     public Application() {
 
     }
-    @OneToMany(
-            mappedBy = "application",
-            cascade = CascadeType.ALL,
-            fetch = FetchType.EAGER,
-            orphanRemoval = true
-    )
-    @JsonManagedReference
-    private List<Page> pages = new ArrayList<>();
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "app_seq_generator")
+    @SequenceGenerator(name = "app_seq_generator", sequenceName = "app_seq_generator", allocationSize = 1)
+    private Long id;
 
     public List<Page> getPages() {
         return pages;
     }
 
-    public void addPage(Page page){
+    public void addPage(Page page) {
         if (!this.pages.contains(page)) {
             pages.add(page);
         }
